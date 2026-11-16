@@ -1,5 +1,4 @@
 import json
-
 from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
@@ -60,7 +59,7 @@ class ImageService:
             for node_id, node in data.items():
                 if "KSampler" in node.get("class_type", ""):
                     inputs = node.get("inputs", {})
-                    params["seed"] = inputs.get("seed")
+                    params["seed"] = inputs.get("seed") or inputs.get("noise_seed")
                     params["steps"] = inputs.get("steps")
                     params["cfg_scale"] = inputs.get("cfg")
 

@@ -3,46 +3,43 @@
 {% block title %}Арт {{ artwork.hash|slice:":8" }}{% endblock %}
 {% block content %}
 <div class="d-flex flex-wrap flex-lg-nowrap align-items-center gap-3 pb-3 mb-3 border-bottom">
-  <h3 class="mb-md-0">
+  <h3 class="mb-0">
     <i class="fa-solid fa-image me-1" aria-hidden="true"></i>Арт {{ artwork.hash|slice:":8" }}
   </h3>
-  <a href="{% url 'index' %}?page=1" class="btn btn-dark rounded-pill px-3 shadow-sm ms-auto">
-    <i class="fa-solid fa-arrow-left me-1" aria-hidden="true"></i>В галерею
-  </a>
+  <div class="d-flex gap-3 ms-auto">
+    <a
+      href="{% url 'index' %}?page=1"
+      class="btn btn-dark px-lg-3 py-2 py-lg-1 rounded-pill d-flex align-items-center gap-1"
+      data-bs-toggle="tooltip" data-bs-title="В галерею"
+    >
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i><span class="d-none d-lg-block">В галерею</span>
+    </a>
+    <a
+      href="{% url 'artworks:download' artwork.hash %}"
+      class="btn btn-dark px-lg-3 py-2 py-lg-1 rounded-pill d-flex align-items-center gap-1"
+      data-bs-toggle="tooltip" data-bs-title="Скачать оригинал"
+    >
+      <i class="fa-solid fa-download" aria-hidden="true"></i><span class="d-none d-lg-block">Скачать оригинал</span>
+    </a>
+    <button
+      type="submit" form="delete_artwork"
+      class="btn btn-outline-danger px-lg-3 py-2 py-lg-1 rounded-pill d-flex align-items-center gap-1"
+      data-bs-toggle="tooltip" data-bs-title="Удалить арт"
+    >
+      <i class="fa-solid fa-trash" aria-hidden="true"></i><span class="d-none d-lg-block">Удалить арт</span>
+    </button>
+  </div>
 </div>
 <div class="row g-4">
-  <div class="col-md-5 col-lg-7">
+  <div class="col-lg-7">
     <img
       src="{{ artwork.original_file.url }}"
       alt="Artwork {{ artwork.hash }}"
       fetchpriority="high"
-      class="img-fluid rounded-4 d-block mx-auto shadow-sm {% if not similar_artworks %}sticky-top{% endif %}"
-      style="top: 4rem; z-index: 1; max-height: 60vh; max-width: 100%; object-fit: contain; height: auto;"
+      class="img-fluid rounded-4 d-block mx-auto shadow-sm"
+      style="max-height: 60vh; max-width: 100%; object-fit: contain; height: auto;"
     >
-    {% if similar_artworks %}
-    <h5 class="fw-bold mb-3 pt-3 mt-3 border-top">Похожие работы</h5>
-    <div class="row g-3">
-      {% for art in similar_artworks %}
-      <div class="col-3">
-        <div class="card rounded-4 border-0 shadow-sm">
-          <a href="{{ art.get_absolute_url }}">
-            <img 
-              src="{{ art.thumbnail_file.url }}"
-              alt="{{ art.hash }}"
-              class="d-block rounded-4"
-              loading="lazy"
-              style="width: 100%; height: 200px; object-fit: cover;"
-            >
-          </a>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-  </div>
-
-  <div class="col-md-7 col-lg-5">
-    <div class="card border-0 shadow rounded-4 mb-3">
+    <div class="card border-0 shadow rounded-4 mt-3">
       <div class="card-body">
         <h5 class="card-title d-flex align-items-center">
           <span>
@@ -50,54 +47,54 @@
           </span>
           <a
             href="{% url 'artworks:edit' artwork.hash %}"
-            class="btn btn-sm btn-outline-dark rounded-pill px-3 ms-auto"
+            class="btn btn-sm btn-outline-dark rounded-pill px-lg-3 py-2 py-lg-1 ms-auto d-flex align-items-center gap-1"
             data-bs-toggle="tooltip" data-bs-title="Редактировать"
           >
-            <i class="fa-solid fa-pen" aria-hidden="true"></i>
+            <i class="fa-solid fa-pen" aria-hidden="true"></i><span class="d-none d-lg-block">Редактировать</span>
           </a>
         </h5>
         <div class="table-responsive">
           <table class="table align-middle mb-0 small">
             <tbody>
               <tr>
-                  <td class="text-muted" style="width: 40%;">Категория</td>
-                  <td class="fw-medium text-end">{{ artwork.category.get_badge_html|default:'—' }}</td>
+                <td class="text-muted" style="width: 40%;">Категория</td>
+                <td class="fw-medium text-end">{{ artwork.category.get_badge_html|default:'—' }}</td>
               </tr>
               <tr>
-                  <td class="text-muted">Модель</td>
-                  <td class="fw-medium text-end">{{ artwork.model_name|default:'—' }}</td>
+                <td class="text-muted">Модель</td>
+                <td class="fw-medium text-end">{{ artwork.model_name|default:'—' }}</td>
               </tr>
               <tr>
-                  <td class="text-muted">Seed</td>
-                  <td class="fw-medium text-end text-break">{{ artwork.seed|default:'—' }}</td>
+                <td class="text-muted">Seed</td>
+                <td class="fw-medium text-end text-break">{{ artwork.seed|default:'—' }}</td>
               </tr>
               <tr>
-                  <td class="text-muted">Steps</td>
-                  <td class="fw-medium text-end">{{ artwork.steps|default:'—' }}</td>
+                <td class="text-muted">Steps</td>
+                <td class="fw-medium text-end">{{ artwork.steps|default:'—' }}</td>
               </tr>
               <tr>
-                  <td class="text-muted">CFG</td>
-                  <td class="fw-medium text-end">{{ artwork.cfg_scale|default:'—' }}</td>
+                <td class="text-muted">CFG</td>
+                <td class="fw-medium text-end">{{ artwork.cfg_scale|default:'—' }}</td>
               </tr>
               <tr>
-                  <td class="text-muted">Размер</td>
-                  <td class="fw-medium text-end">{{ artwork.width }}x{{ artwork.height }}</td>
+                <td class="text-muted">Размер</td>
+                <td class="fw-medium text-end">{{ artwork.width }}x{{ artwork.height }}</td>
               </tr>
               <tr>
-                  <td class="text-muted">Дата загрузки</td>
-                  <td class="fw-medium text-end">
-                      <time datetime="{{ artwork.uploaded_at.isoformat }}" class="js-timeago fw-medium" data-bs-placement="top" data-bs-toggle="tooltip">
-                          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
-                      </time>
-                  </td>
+                <td class="text-muted">Дата загрузки</td>
+                <td class="fw-medium text-end">
+                  <time datetime="{{ artwork.uploaded_at.isoformat }}" class="js-timeago fw-medium" data-bs-placement="top" data-bs-toggle="tooltip">
+                    <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+                  </time>
+                </td>
               </tr>
               <tr>
-                  <td class="text-muted">Дата обновления</td>
-                  <td class="fw-medium text-end">
-                      <time datetime="{{ artwork.updated_at.isoformat }}" class="js-timeago fw-medium" data-bs-placement="top" data-bs-toggle="tooltip">
-                          <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
-                      </time>
-                  </td>
+                <td class="text-muted">Дата обновления</td>
+                <td class="fw-medium text-end">
+                  <time datetime="{{ artwork.updated_at.isoformat }}" class="js-timeago fw-medium" data-bs-placement="top" data-bs-toggle="tooltip">
+                    <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
+                  </time>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -108,7 +105,7 @@
     <div class="row g-3 mt-3">
       {% if artwork.positive_prompt %}
       <div class="col-12">
-        <div class="d-flex justify-content-between mb-1 mx-2">
+        <div class="d-flex justify-content-between mb-2 mx-2">
           <span class="small text-muted fw-bold text-uppercase">Positive</span>
           <button
             class="btn btn-sm btn-link text-decoration-none p-0 text-muted copy-btn"
@@ -127,7 +124,7 @@
         
       {% if artwork.negative_prompt %}
       <div class="col-12">
-        <div class="d-flex justify-content-between mb-1 mx-2">
+        <div class="d-flex justify-content-between mb-2 mx-2">
           <span class="small text-muted fw-bold text-uppercase">Negative</span>
           <button
             class="btn btn-sm btn-link text-decoration-none p-0 text-muted copy-btn"
@@ -145,14 +142,32 @@
       {% endif %}
     </div>
     {% endif %}
-    <div class="border-top mt-3 pt-3 d-flex flex-column gap-3">
-      <a href="{% url 'artworks:download' artwork.hash %}" class="btn btn-dark rounded-pill shadow-sm">
-        <i class="fa-solid fa-download me-1" aria-hidden="true"></i>Скачать оригинал
-      </a>
-      <button type="submit" class="btn btn-outline-danger rounded-pill" form="delete_artwork">
-        <i class="fa-solid fa-trash me-1" aria-hidden="true"></i>Удалить арт
-      </button>
+  </div>
+  <div class="col-lg-5">
+    {% if similar_artworks %}
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body">
+        <h5 class="card-title">Похожие работы</h5>
+        <div class="row g-3">
+          {% for art in similar_artworks %}
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="card rounded-4 border-0 shadow-sm">
+              <a href="{{ art.get_absolute_url }}">
+                <img 
+                  src="{{ art.thumbnail_file.url }}"
+                  alt="{{ art.hash }}"
+                  class="d-block rounded-4"
+                  loading="lazy"
+                  style="width: 100%; height: 200px; object-fit: cover;"
+                >
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
+    {% endif %}
   </div>
 </div>
 <form

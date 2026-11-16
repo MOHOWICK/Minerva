@@ -3,7 +3,10 @@
 {% block title %}Мои арты{% endblock %}
 {% block content %}
 <div class="d-flex flex-wrap flex-md-nowrap gap-3 align-items-center pb-3 mb-3 border-bottom">
-  <h3 class="mb-0">Привет, <b>{{ user.username }}</b>!</h3>
+  <div class="d-flex flex-column">
+    <h3>Привет, <b>{{ user.username }}</b>!</h3>
+    <p class="text-muted mb-0 small">Все ваши работы в одном месте. Используйте поиск и фильтры, чтобы найти нужное.</p>
+  </div>
   <a href="{% url 'artworks:upload' %}" class="btn btn-dark rounded-pill px-3 shadow-sm ms-auto">
     <i class="fa-solid fa-upload me-1" aria-hidden="true"></i>Загрузить арт
   </a>
@@ -118,7 +121,7 @@
           style="--aspect-w: {{ artwork.width|default:'1' }}; --aspect-h: {{ artwork.height|default:'1' }};"
         >
         {% if artwork.category %}
-        <div class="position-absolute bottom-0 start-0 p-1">
+        <div class="position-absolute bottom-0 end-0 p-2">
           {{ artwork.category.get_badge_html }}
         </div>
         {% endif %}
@@ -127,8 +130,7 @@
         <time
           datetime="{{ artwork.uploaded_at.isoformat }}"
           class="js-timeago small fw-medium"
-          data-bs-placement="top"
-          data-bs-toggle="tooltip"
+          data-bs-placement="top" data-bs-toggle="tooltip"
         >
           <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
         </time>
