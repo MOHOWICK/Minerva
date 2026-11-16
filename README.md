@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/downloads/)
 [![Django](https://img.shields.io/badge/django-5.0-green.svg)](https://www.djangoproject.com/)
 
-> 📚 **Вся подробная документация (установка, настройка, обновление) находится в [Wiki проекта]([https://github.com/ваш_ник/minerva/wiki](https://github.com/MOKHOVIK/Minerva/wiki)).**
+> 📚 **Вся подробная документация (установка, настройка, обновление) находится в [Wiki проекта](https://github.com/MOKHOVIK/Minerva/wiki).**
 > Здесь вы найдете ответы на все вопросы.
 
 **Minerva** — это локальная галерея для сгенерированных артов (*ComfyUI / Stable Diffusion*). Умное хранение оригиналов и превью, удобный поиск по промптам, фильтры по моделям и встроенная база знаний с заметками. Ваш приватный архив работ с красивым интерфейсом.
