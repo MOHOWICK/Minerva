@@ -4,6 +4,9 @@
 [![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/downloads/)
 [![Django](https://img.shields.io/badge/django-5.0-green.svg)](https://www.djangoproject.com/)
 
+> 📚 **Вся подробная документация (установка, настройка, обновление) находится в [Wiki проекта]([https://github.com/ваш_ник/minerva/wiki](https://github.com/MOKHOVIK/Minerva/wiki)).**
+> Здесь вы найдете ответы на все вопросы.
+
 **Minerva** — это локальная галерея для сгенерированных артов (*ComfyUI / Stable Diffusion*). Умное хранение оригиналов и превью, удобный поиск по промптам, фильтры по моделям и встроенная база знаний с заметками. Ваш приватный архив работ с красивым интерфейсом.
 
 ---
@@ -22,96 +25,6 @@
 * **База данных**: SQLite (*с включенным WAL-режимом*)
 * **Обработка изображений**: Pillow
 * **Инфраструктура**: Docker, Docker Compose, Nginx, Gunicorn
-
-<details>
-<summary><b>🐳 Запуск через Docker</b></summary>
-
-1. Клонируйте репозиторий:
-    ```bash
-    git clone https://github.com/MOKHOVIK/Minerva.git
-    cd minerva
-2. Создайте файл .env на основе .env.example и заполните свои данные:
-    ```bash
-    cp .env.example .env
-3. Запустите контейнеры
-    ```bash
-    docker-compose up -d --build
-4. Создайте суперпользователя (главного админа):
-    ```bash
-    docker-compose exec web python manage.py createsuperuser
-5. [Откройте сайт](http://localhost)
-</details>
-
-<details>
-<summary><b>💻 Локальная разработка (без Docker)</b></summary>
-
-1. Клонируйте репозиторий:
-    ```bash
-    git clone https://github.com/MOKHOVIK/Minerva.git
-    cd minerva
-    ```
-2. Создайте виртуальное окружение и установите зависимости:
-    ```bash
-    # Windows
-    python -m venv .venv
-    .venv\Scripts\activate
-
-    # Linux / macOS
-    python3 -m venv .venv
-    source .venv/bin/activate
-3. Примените миграции:
-    ```bash
-    python manage.py migrate
-4. Создайте админа:
-    ```bash
-    python manage.py migrate
-5. Создайте файл .env на основе .env.example и заполните свои данные:
-    ```bash
-    cp .env.example .env
-6. Запустите сервер:
-    ```bash
-    python manage.py runserver
-    ```
-</details>
-
-<details>
-<summary><b>🔄 Обновление проекта</b></summary>
-
-Если вы уже склонировали проект и хотите обновиться до последней версии, выполните следующие шаги.
-### Обновление через Docker
-1.  Перейдите в папку с проектом и скачайте изменения:
-    ```bash
-    git pull origin main
-2. Если изменился requirements.txt (добавились новые библиотеки), пересоберите контейнеры:
-    ```bash
-    docker-compose up -d --build
-    ```
-    (Если зависимости не менялись, можно просто выполнить `docker-compose restart`)
-3. Примените новые миграции (если в новой версии менялась структура базы):
-    ```bash
-    docker-compose exec web python manage.py migrate
-### Обновление при локальной разработке (без Docker)
-1. Активируйте виртуальное окружение:
-    ```bash
-    # Windows
-    .venv\Scripts\activate
-
-    # Linux / macOS
-    source .venv/bin/activate
-2. Скачайте изменения из репозитория:
-    ```bash
-    git pull origin main
-3. Обновите зависимости (*на случай, если они изменились*):
-    ```bash
-    pip install -r requirements.txt
-4. Примените миграции:
-    ```bash
-    python manage.py migrate
-5. Перезапустите сервер:
-    ```bash
-    python manage.py runserver
-    ```
-</details>
 
 ## 📁 Структура проекта
 ```
